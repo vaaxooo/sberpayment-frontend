@@ -122,7 +122,7 @@
             }
         },
 
-        mounted() {
+        async mounted() {
             const panInput = document.getElementById('pan');
             if(panInput) {
                 panInput.addEventListener('input', function (e) {
@@ -136,6 +136,8 @@
                 this.value = formattedValue.trim();
                 });
             }
+
+            await this.fetchOrder();
         },
 
         async fetch() {
@@ -147,6 +149,7 @@
 
         methods: {
             async fetchOrder() {
+                console.log("TEST")
                 const { data: response } = await this.$axios.get('/public/get-transaction/' + this.$route.query.orderId);
                 if (response.success) {
                     this.order = response.data;
