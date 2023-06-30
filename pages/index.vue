@@ -76,7 +76,7 @@
                         <div class="styles_email__1aVVO">
                             <div class="styles_container__12-uk styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input name="email" id="email" class="styles_input__3Lzh2" data-test-id="email" placeholder=" " type="email" value="admin@example.com"><label for="email" class="styles_label__duzlq">Электронная почта</label>
+                                    <input name="email" id="email" class="styles_input__3Lzh2" data-test-id="email" placeholder=" " type="email" value=""><label for="email" class="styles_label__duzlq">Электронная почта</label>
                                     <div class="styles_rightSection__3_C3P"></div>
                                     <div class="styles_errorText__1jKEn"></div>
                                 </div>
