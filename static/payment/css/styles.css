@@ -4435,3 +4435,7 @@ body {
 .is-invalid {
     border: 1px solid #fb233d;
 }
+
+.invalid {
+    margin-bottom: 15px;
+}

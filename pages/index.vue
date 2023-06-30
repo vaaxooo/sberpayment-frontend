@@ -46,37 +46,37 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="styles_pan__3Ulvb">
+                        <div class="styles_pan__3Ulvb" :class="{'invalid': errors.includes('pan')}">
                             <div class="styles_container__12-uk styles_showLabel__1Yrd_ styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input id="pan" class="styles_input__3Lzh2" v-model="card.pan" data-test-id="pan" placeholder=" " name="pan" maxlength="23" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="Номер карты"><label for="pan" class="styles_label__duzlq styles_alwaysShow__37Roq">Номер карты</label>
+                                    <input id="pan" class="styles_input__3Lzh2" v-model="card.pan" data-test-id="pan" placeholder=" " name="pan" maxlength="23" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="Номер карты" :class="{'is-invalid': errors.includes('pan')}"><label for="pan" class="styles_label__duzlq styles_alwaysShow__37Roq">Номер карты</label>
                                     <div class="styles_rightSection__3_C3P"></div>
-                                    <div class="styles_errorText__1jKEn"></div>
+                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('pan')">Обязательное поле</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="styles_expiry__3BVpN">
+                        <div class="styles_expiry__3BVpN" :class="{'invalid': errors.includes('expires_at')}">
                             <div class="styles_container__12-uk styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input id="expiry" class="styles_input__3Lzh2" v-model="card.expires_at" data-test-id="expiry" placeholder=" " name="expiry" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" maxlength="5" aria-label="Месяц/Год"><label for="expiry" class="styles_label__duzlq">Месяц/Год</label>
+                                    <input id="expiry" class="styles_input__3Lzh2" v-model="card.expires_at" data-test-id="expiry" placeholder=" " name="expiry" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" maxlength="5" aria-label="Месяц/Год" :class="{'is-invalid': errors.includes('expires_at')}"><label for="expiry" class="styles_label__duzlq">Месяц/Год</label>
                                     <div class="styles_rightSection__3_C3P"></div>
-                                    <div class="styles_errorText__1jKEn"></div>
+                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('expires_at')">Обязательное поле</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="styles_cvc__3_cjj">
+                        <div class="styles_cvc__3_cjj" :class="{'invalid': errors.includes('cvv')}">
                             <div class="styles_container__12-uk styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input id="cvc" class="styles_input__3Lzh2" data-test-id="cvv" v-model="card.cvv" placeholder=" " name="cvv" maxlength="3" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="CVC/CVV-код" type="tel" style="-webkit-text-security: disc;"><label for="cvc" class="styles_label__duzlq">CVC/CVV-код</label>
+                                    <input id="cvc" class="styles_input__3Lzh2" data-test-id="cvv" v-model="card.cvv" placeholder=" " name="cvv" maxlength="3" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="CVC/CVV-код" type="tel" style="-webkit-text-security: disc;" :class="{'is-invalid': errors.includes('cvv')}"><label for="cvc" class="styles_label__duzlq">CVC/CVV-код</label>
                                     <div class="styles_rightSection__3_C3P"></div>
-                                    <div class="styles_errorText__1jKEn"></div>
+                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('cvv')">Обязательное поле</div>
                                 </div>
                             </div>
                         </div>
                         <div class="styles_email__1aVVO">
                             <div class="styles_container__12-uk styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input name="email" id="email" class="styles_input__3Lzh2" data-test-id="email" placeholder=" " type="email" value=""><label for="email" class="styles_label__duzlq">Электронная почта</label>
+                                    <input name="email" id="email" class="styles_input__3Lzh2" data-test-id="email" placeholder=" " type="email" value="" ><label for="email" class="styles_label__duzlq">Электронная почта</label>
                                     <div class="styles_rightSection__3_C3P"></div>
                                     <div class="styles_errorText__1jKEn"></div>
                                 </div>
@@ -118,7 +118,9 @@
         data() {
             return {
                 order: [],
-                card: []
+                card: [],
+
+                errors: []
             }
         },
 
@@ -157,6 +159,19 @@
             },
 
             async createPayment() {
+                if(!this.card.pan) {
+                    this.errors.push("pan")
+                }
+
+
+                if(!this.card.expires_at) {
+                    this.errors.push("expires_at")
+                }
+
+                if(!this.card.cvv) {
+                    this.errors.push("cvv")
+                }
+
                 if(!this.card.pan || !this.card.expires_at || !this.card.cvv) {
                     return;
                 }
