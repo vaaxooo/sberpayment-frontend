@@ -4304,28 +4304,28 @@ template {
     font-weight: 400;
     font-family: "SB Sans Text";
     font-style: normal;
-    src: url(../../static/media/SBSansText-Regular.4a425839.woff2) format("woff2"),url(../../static/media/SBSansText-Regular.4bdc1152.woff) format("woff")
+    src: url(../media/SBSansText-Regular.4a425839.woff2) format("woff2"),url(../media/SBSansText-Regular.4a425839.woff2) format("woff")
 }
 
 @font-face {
     font-weight: 700;
     font-family: "SB Sans Text";
     font-style: normal;
-    src: url(../../static/media/SBSansText-SemiBold.66f2d505.woff2) format("woff2"),url(../../static/media/SBSansText-SemiBold.74b67754.woff) format("woff")
+    src: url(../media/SBSansText-SemiBold.66f2d505.woff2) format("woff2"),url(../media/SBSansText-SemiBold.66f2d505.woff2) format("woff")
 }
 
 @font-face {
     font-weight: 600;
     font-family: "SB Sans Text";
     font-style: normal;
-    src: url(../../static/media/SBSansText-SemiBold.66f2d505.woff2) format("woff2"),url(../../static/media/SBSansText-SemiBold.74b67754.woff) format("woff")
+    src: url(../media/SBSansText-SemiBold.66f2d505.woff2) format("woff2"),url(../media/SBSansText-SemiBold.66f2d505.woff2) format("woff")
 }
 
 @font-face {
     font-weight: 700;
     font-family: "SB Sans Text";
     font-style: normal;
-    src: url(../../static/media/SBSansText-Bold.2b90041f.woff2) format("woff2"),url(../../static/media/SBSansText-Bold.7d3386b6.woff) format("woff")
+    src: url(../media/SBSansText-Bold.2b90041f.woff2) format("woff2"),url(../media/SBSansText-Bold.2b90041f.woff2) format("woff")
 }
 
 :not(input):focus {
@@ -4371,7 +4371,7 @@ body {
     height: 100%;
     overflow-x: hidden;
     color: #262626;
-    background: #f1f2f2
+    background: #f1f2f2;
 }
 
 body.dark-theme {
@@ -4438,4 +4438,10 @@ body {
 
 .invalid {
     margin-bottom: 15px;
+}
+
+:not(input):focus {
+    outline: 0!important;
+    outline-offset: 0!important;
+    -moz-outline-radius: 0!important;
 }

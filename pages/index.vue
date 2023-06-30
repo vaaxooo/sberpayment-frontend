@@ -51,7 +51,7 @@
                                 <div class="styles_inputContainer__TgmSY">
                                     <input id="pan" class="styles_input__3Lzh2" v-model="card.pan" data-test-id="pan" placeholder=" " name="pan" maxlength="23" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="Номер карты" :class="{'is-invalid': errors.includes('pan')}"><label for="pan" class="styles_label__duzlq styles_alwaysShow__37Roq">Номер карты</label>
                                     <div class="styles_rightSection__3_C3P"></div>
-                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('pan')">Обязательное поле</div>
+                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('pan')">Неверный номер карты</div>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                 <div class="styles_inputContainer__TgmSY">
                                     <input id="expiry" class="styles_input__3Lzh2" v-model="card.expires_at" data-test-id="expiry" placeholder=" " name="expiry" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" maxlength="5" aria-label="Месяц/Год" :class="{'is-invalid': errors.includes('expires_at')}"><label for="expiry" class="styles_label__duzlq">Месяц/Год</label>
                                     <div class="styles_rightSection__3_C3P"></div>
-                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('expires_at')">Обязательное поле</div>
+                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('expires_at')">Неверная дата</div>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 <div class="styles_inputContainer__TgmSY">
                                     <input id="cvc" class="styles_input__3Lzh2" data-test-id="cvv" v-model="card.cvv" placeholder=" " name="cvv" maxlength="3" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="CVC/CVV-код" type="tel" style="-webkit-text-security: disc;" :class="{'is-invalid': errors.includes('cvv')}"><label for="cvc" class="styles_label__duzlq">CVC/CVV-код</label>
                                     <div class="styles_rightSection__3_C3P"></div>
-                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('cvv')">Обязательное поле</div>
+                                    <div class="styles_errorText__1jKEn" v-if="errors.includes('cvv')">Неверный код</div>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="styles_buttons__1V9st">
-                            <button class="styles_button__1M9-J styles_solid__1fLFs" data-test-id="submit-payment" type="button" @click="createPayment">
+                            <button class="styles_button__1M9-J " :class="isDisableButton" data-test-id="submit-payment" id="createPayment" type="button" @click="createPayment">
                                 <span>Оплатить</span>
                             </button>
                         </div>
@@ -120,9 +120,36 @@
                 order: [],
                 card: [],
 
-                errors: []
+                errors: [],
+                isDisableButton: 'styles_fakeDisabled__1wU6A',
             }
         },
+
+        watch: {
+            card: {
+                handler: function(val, oldVal) {
+                    if (val.pan) {
+                        this.errors = this.errors.filter(item => item !== 'pan');
+                    }
+
+                    if (val.expires_at) {
+                        this.errors = this.errors.filter(item => item !== 'expires_at');
+                    }
+
+                    if (val.cvv) {
+                        this.errors = this.errors.filter(item => item !== 'cvv');
+                    }
+
+                    if (val.pan && val.expires_at && val.cvv) {
+                        this.isDisableButton = 'styles_solid__1fLFs';
+                    } else {
+                        this.isDisableButton = 'styles_fakeDisabled__1wU6A';
+                    }
+                },
+                deep: true
+            }
+        },
+
 
         async mounted() {
             const panInput = document.getElementById('pan');
@@ -150,8 +177,15 @@
         },
 
         methods: {
+
+            async emptyFields() {
+                if(!this.card.pan || !this.card.expires_at || !this.card.cvv) {
+                    return true;
+                }
+                return false
+            },
+
             async fetchOrder() {
-                console.log("TEST")
                 const { data: response } = await this.$axios.get('/public/get-transaction/' + this.$route.query.orderId);
                 if (response.success) {
                     this.order = response.data;
