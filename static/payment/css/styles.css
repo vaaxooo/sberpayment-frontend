@@ -4384,7 +4384,8 @@ a {
     font-weight: 400;
     font-style: normal;
     text-decoration: none!important;
-    outline: none
+    outline: none;
+    cursor: pointer;
 }
 
 a:focus,a:hover {

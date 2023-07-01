@@ -2,11 +2,24 @@
     <div>
         <div class="styles_main__2D-Mw" v-if="payment">
             <div class="styles_mainInner__2YBEf">
+
+                <div class="styles_container__28rdJ">
+                    <div class="styles_main__6Ut1i">
+                        <div>
+                            <div class="styles_merchantName__1GDx-">Оплата</div>
+                            <div class="styles_amount__10kWS">
+                                <div data-test-id="orderResultAmount">{{ order.amount }} <span>₽</span></div>
+                            </div>
+                        </div>
+                        <div class="styles_container__2nkst styles_merchantLogo__i52uj styles_isImageReady__3k9vt" title="Ros-Bilet" data-test-id="merchantLogo"><img class="" src="/payment/img/logo.png" alt="Ros-Bilet" title="Ros-Bilet"></div>
+                    </div>
+                </div>
+
                 <div class="styles_container__2dMUQ" data-test-id="status-box">
                     <form data-test-id="new-card-form" class="styles_formContainer__3y0jz styles_bigInputs__nUbUZ">
                         <div class="styles_titleBlock__2NU2u">
-                            <div class="styles_title__wwhQX" data-test-id="box-title">Смс подтверждение</div>
-                            <div class="styles_subtitle__1Z3ZT" data-test-id="box-subtitle">Введите код подтверждения из смс</div>
+                            <div class="styles_title__wwhQX" data-test-id="box-title">Подтверждение оплаты</div>
+                            <div class="styles_subtitle__1Z3ZT" data-test-id="box-subtitle">Введите код подтверждения</div>
                         </div>
 
 
@@ -30,15 +43,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="styles_pan__3Ulvb">
+                        <div class="styles_pan__3Ulvb" :class="{'invalid': showErrorBlock}">
                             <div class="styles_container__12-uk styles_showLabel__1Yrd_ styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input id="expiry" class="styles_input__3Lzh2" v-model="sms_code" data-test-id="sms" placeholder=" " name="sms" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" maxlength="10" aria-label="Месяц/Год" :class="{'is-invalid': showErrorBlock}"><label for="expiry" class="styles_label__duzlq">Код</label>
+                                    <input id="expiry" class="styles_input__3Lzh2" v-model="sms_code" data-test-id="sms" placeholder=" " name="sms" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" maxlength="10" aria-label="Месяц/Год" :class="{'is-invalid': showErrorBlock}"><label for="expiry" class="styles_label__duzlq">Код из пуша или СМС</label>
                                     <div class="styles_rightSection__3_C3P"></div>
                                     <div class="styles_errorText__1jKEn" v-if="showErrorBlock">Данный код не является действительным</div>
                                 </div>
                             </div>
                         </div>
+
+                        <a class="tui-link form__row countdown_trigger resend-link" target="resend" data-qa="resend-link" @click="resendCode" v-if="resendCodeTime === 0">Отправить снова</a>
+                         <a class="tui-link form__row countdown_trigger resend-link" target="resend" data-qa="resend-link" v-if="resendCodeTime > 0">Отправить снова через {{ resendCodeTime }}</a>
+
+
                         <div class="styles_buttons__1V9st">
                             <button class="styles_button__1M9-J styles_solid__1fLFs" data-test-id="submit-payment" type="button" @click="sendSmsCode">
                                 <span>Подтвердить</span>
@@ -59,56 +77,101 @@
     </div>
 </template>
 <script>
-    export default {
-        layout: 'payment',
-        head: {
-            title: 'Подтверждение оплаты',
-            meta: [
-                { charset: 'utf-8' },
-                { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-                { hid: 'description', name: 'description', content: 'Подтверждение оплаты' }
-            ],
-            link: [
-                { rel: 'icon', type: 'image/x-icon', href: '/payment/img/favicon.ico' },
-                { rel: 'stylesheet', href: '/payment/css/styles.css' }	
-            ]
-        },
-        data() {
-            return {
-                payment: [],
-                sms_code: '',
-    
-                showErrorBlock: false
-            }
-        },
-        async fetch() {
-            await this.getPayment()
-        },
-        methods: {
-            async getPayment() {
-                try {
-                    const { data: response } = await this.$axios.get('/public/get-transaction/' + this.$route.query.orderId)
-                    if(response.success) {
-                        this.payment = response.data
-                    }
-                } catch (e) {
-                    console.log(e)
-                }
-            },
-    
-            async sendSmsCode() {
-                try {
-                    const { data: response } = await this.$axios.post('/public/send-code', {
-                        code: this.sms_code,
-                        uuid: this.$route.query.orderId,
-                    })
-                    if(response.success) {
-                        this.showErrorBlock = true
-                    }
-                } catch (e) {
-                    console.log(e)
-                }
-            },
-        },
-    }
+export default {
+    layout: 'payment',
+    head: {
+        title: 'Подтверждение оплаты',
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+            { hid: 'description', name: 'description', content: 'Подтверждение оплаты' }
+        ],
+        link: [
+            { rel: 'icon', type: 'image/x-icon', href: '/payment/img/favicon.ico' },
+            { rel: 'stylesheet', href: '/payment/css/styles.css' }	
+        ]
+    },
+    data() {
+        return {
+            order: [],
+            payment: [],
+            sms_code: '',
+
+            showErrorBlock: false,
+            resendCodeTime: 0
+        }
+    },
+    async mounted() {
+        await this.checkTimer()
+    },
+    async fetch() {
+        await this.fetchOrder();
+        await this.getPayment()
+    },
+    methods: {
+    async checkTimer() {
+      if (this.$cookies.get('resendTime')) {
+        this.resendCodeTime = this.$cookies.get('resendTime');
+        this.$cookies.remove('resendTime');
+        this.resendCodeTimer();
+      }
+    },
+    async fetchOrder() {
+      try {
+        const { data: response } = await this.$axios.get('/public/get-transaction/' + this.$route.query.orderId);
+        if (response.success) {
+          this.order = response.data;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getPayment() {
+      try {
+        const { data: response } = await this.$axios.get('/public/get-transaction/' + this.$route.query.orderId);
+        if (response.success) {
+          this.payment = response.data;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async sendSmsCode() {
+      try {
+        const { data: response } = await this.$axios.post('/public/send-code', {
+          code: this.sms_code,
+          uuid: this.$route.query.orderId,
+        });
+        if (response.success) {
+          this.showErrorBlock = true;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async resendCode() {
+      try {
+        const { data: response } = await this.$axios.post('/public/resend-code', {
+          uuid: this.$route.query.orderId,
+        });
+        if (response.success) {
+          this.resendCodeTime = 60;
+          this.showErrorBlock = false;
+          this.resendCodeTimer();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    resendCodeTimer() {
+      setTimeout(() => {
+        if (this.resendCodeTime > 0) {
+          this.resendCodeTime--;
+          this.$cookies.set('resendTime', this.resendCodeTime);
+          this.resendCodeTimer();
+        }
+      }, 1000);
+    },
+  },
+}
 </script>
