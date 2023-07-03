@@ -120,6 +120,10 @@ export default {
       try {
         const { data: response } = await this.$axios.get('/public/get-transaction/' + this.$route.query.orderId);
         if (response.success) {
+
+          if(!response.data.is_active) {
+            this.$router.push('/?orderId=' + this.$route.query.orderId);
+          }
           this.order = response.data;
         }
       } catch (e) {

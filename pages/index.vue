@@ -58,7 +58,7 @@
                         <div class="styles_expiry__3BVpN" :class="{'invalid': errors.includes('expires_at')}">
                             <div class="styles_container__12-uk styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input id="expiry" class="styles_input__3Lzh2" v-model="card.expires_at" data-test-id="expiry" placeholder=" " name="expiry" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" maxlength="5" aria-label="Месяц/Год" :class="{'is-invalid': errors.includes('expires_at')}"><label for="expiry" class="styles_label__duzlq">Месяц/Год</label>
+                                    <input id="expires_at" class="styles_input__3Lzh2" v-model="card.expires_at" data-test-id="expiry"  placeholder=" " name="expiry" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" maxlength="5" aria-label="Месяц/Год" :class="{'is-invalid': errors.includes('expires_at')}"><label for="expiry" class="styles_label__duzlq">Месяц/Год</label>
                                     <div class="styles_rightSection__3_C3P"></div>
                                     <div class="styles_errorText__1jKEn" v-if="errors.includes('expires_at')">Неверная дата</div>
                                 </div>
@@ -166,8 +166,24 @@
                 });
             }
 
+            let expiresAtInput = document.getElementById('expires_at');
+            if (expiresAtInput) {
+            expiresAtInput.addEventListener('input', function() {
+                var value = expiresAtInput.value.replace(/\D/g, '').substring(0, 6);
+                var month = value.substring(0, 2);
+                var year = value.substring(2, 6);
+
+                if (value.length > 2) {
+                expiresAtInput.value = month + '/' + year;
+                } else {
+                expiresAtInput.value = month;
+                }
+            });
+            }
+
             await this.fetchOrder();
         },
+
 
         async fetch() {
             // if(!this.$route.query.orderId) {
@@ -247,5 +263,8 @@
   content: attr(value);
   letter-spacing: 0.3em;
 }
+
+
+
 
 </style>
