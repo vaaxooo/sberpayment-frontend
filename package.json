@@ -16,6 +16,7 @@
     "credit-card-type": "^9.1.0",
     "install": "^0.13.0",
     "npm": "^9.7.2",
+    "numeral": "^2.0.6",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",

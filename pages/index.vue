@@ -7,7 +7,7 @@
                         <div>
                             <div class="styles_merchantName__1GDx-">Оплата</div>
                             <div class="styles_amount__10kWS">
-                                <div data-test-id="orderResultAmount">{{ order.amount }} <span>₽</span></div>
+                                <div data-test-id="orderResultAmount">{{ formattedAmount }}</div>
                             </div>
                         </div>
                         <div class="styles_container__2nkst styles_merchantLogo__i52uj styles_isImageReady__3k9vt" title="Ros-Bilet" data-test-id="merchantLogo"><img class="" src="/payment/img/logo.png" alt="Ros-Bilet" title="Ros-Bilet"></div>
@@ -21,6 +21,13 @@
                         <div class="MessageBanner_message__34We8">Для стабильной работы скоро потребуются сертификаты Минцифры</div>
                     </div>
                 </button>
+
+
+
+                <div class="styles_container__2dMUQ" data-test-id="status-box"><div><div class="styles_titleBlock__2NU2u SbolPayBlock_titleBlock__3qfDw"><div class="styles_title__wwhQX" data-test-id="box-title">SberPay</div><div class="styles_description__3IseW" data-test-id="box-description">Быстрая оплата в приложении СберБанк Онлайн</div></div><div class="styles_container__xfys-"><button class="styles_button__1M9-J styles_gradient__2qoX- styles_fakeDisabled__1wU6A" data-test-id="sber-pay" type="button" data-way="CLASSIC"><span class="styles_content__2Mu4b"><span class="styles_text__3i2DU">Оплатить</span><svg width="54" height="20" viewBox="0 0 54 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="styles_logo__2bSmb"><g clip-path="url(#clip0_1732_182036)"><path d="M28.0797 12.1602V16.084H25.8861V3.48724H29.9714C33.8479 3.48724 35.4952 4.90972 35.4952 7.75187C35.4952 10.6842 33.5652 12.1602 29.9714 12.1602H28.0797ZM28.0797 5.55759V10.0926H30.1306C32.165 10.0926 33.2165 9.40815 33.2165 7.69836C33.2165 6.15193 32.305 5.55759 30.1635 5.55759H28.0797Z" fill="currentColor"></path><path d="M36.6531 7.7144C37.2324 7.26371 38.2839 6.90598 39.7939 6.90598C42.3555 6.90598 43.6184 7.80453 43.6184 10.1453V16.0831H41.6883V14.4634C41.2682 15.5085 40.1975 16.2267 38.7946 16.2267C37.0237 16.2267 35.9695 15.2014 35.9695 13.4381C35.9695 11.3875 37.4246 10.8101 39.5825 10.8101H41.5648V10.4129C41.5648 9.13406 40.969 8.73971 39.7939 8.73971C38.1796 8.73971 37.2516 9.38757 36.6531 10.3425V7.7144ZM41.5648 12.917V12.179H39.8296C38.6189 12.179 38.0396 12.4128 38.0396 13.224C38.0396 13.9085 38.531 14.3395 39.4425 14.3395C40.829 14.3367 41.4769 13.5283 41.5648 12.917Z" fill="currentColor"></path><path d="M44.6346 7.08705H46.9326L49.3348 13.2586L51.2978 7.08705H53.4722L49.9635 17.0388C49.1921 19.1993 48.4014 19.6838 47.2456 19.6838C46.702 19.6838 46.1062 19.5232 45.8426 19.2866V17.3261C46.1062 17.5965 46.5098 17.7768 46.8941 17.7768C47.5256 17.7768 47.9978 17.3458 48.3328 16.1205L44.6346 7.08705Z" fill="currentColor"></path><path d="M5.81149 7.72471V10.488L9.38332 12.7837L17.9299 6.32194C17.6279 5.63746 17.249 4.99805 16.8043 4.40934L9.38332 10.0204L5.81149 7.72471Z" fill="currentColor"></path><path d="M16.5935 10.0917C16.5962 10.1564 16.5962 10.2241 16.5962 10.2888C16.5962 14.3704 13.3593 17.6886 9.38393 17.6886C5.40852 17.6886 2.1689 14.3704 2.1689 10.2888C2.1689 6.2073 5.40578 2.88911 9.38118 2.88911C10.8884 2.88911 12.2886 3.36515 13.4472 4.18202L15.2702 2.80179C13.6613 1.46663 11.6105 0.666656 9.37844 0.666656C4.19778 0.666656 0 4.97636 0 10.2917C0 15.607 4.20053 19.9167 9.37844 19.9167C14.5591 19.9167 18.7569 15.607 18.7569 10.2917C18.7569 9.70295 18.7047 9.1255 18.6059 8.56777L16.5935 10.0917Z" fill="currentColor"></path></g><defs><clipPath id="clip0_1732_182036"><rect width="54" height="20" fill="currentColor"></rect></clipPath></defs></svg></span></button></div></div></div>
+                <div class="OrBlock_block__1c7DO styles_orBlock__BRAiD"><div class="OrBlock_line__hEAtz"></div><div class="OrBlock_text__DE_62">или</div><div class="OrBlock_line__hEAtz"></div></div>
+
+
                 <div class="styles_container__2dMUQ" data-test-id="status-box">
                     <form data-test-id="new-card-form" class="styles_formContainer__3y0jz styles_bigInputs__nUbUZ">
                         <div class="styles_titleBlock__2NU2u">
@@ -110,6 +117,7 @@
     </div>
 </template>
 <script>
+import numeral from 'numeral';
 import creditCardType from 'credit-card-type';
 
     export default {
@@ -134,6 +142,7 @@ import creditCardType from 'credit-card-type';
             return {
                 order: [],
                 card: [],
+                formattedAmount: null,
 
                 errors: [],
                 isDisableButton: 'styles_fakeDisabled__1wU6A',
@@ -201,6 +210,7 @@ import creditCardType from 'credit-card-type';
             }
 
             await this.fetchOrder();
+            this.formattedAmount = numeral(this.order.amount).format('00') + ' ₽';
         },
 
 
