@@ -49,12 +49,22 @@
                         <div class="styles_pan__3Ulvb" :class="{'invalid': errors.includes('pan')}">
                             <div class="styles_container__12-uk styles_showLabel__1Yrd_ styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input id="pan" class="styles_input__3Lzh2" v-model="card.pan" data-test-id="pan" placeholder=" " name="pan" maxlength="23" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="Номер карты" :class="{'is-invalid': errors.includes('pan')}"><label for="pan" class="styles_label__duzlq styles_alwaysShow__37Roq">Номер карты</label>
+                                    <input id="pan" class="styles_input__3Lzh2" v-model="card.pan" @input="detectCardType" data-test-id="pan" placeholder=" " name="pan" maxlength="23" type="tel" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="Номер карты" :class="{'is-invalid': errors.includes('pan')}"><label for="pan" class="styles_label__duzlq styles_alwaysShow__37Roq">Номер карты</label>
+                                    <div class="card-icon">
+                                        <div class="card-icon-img">
+                                            <img v-if="bankIcon" :src="bankIcon" alt="Bank Icon" class="img-icon-logo" />
+                                        </div>
+                                    </div>
+                                    
                                     <div class="styles_rightSection__3_C3P"></div>
                                     <div class="styles_errorText__1jKEn" v-if="errors.includes('pan')">Неверный номер карты</div>
                                 </div>
                             </div>
                         </div>
+
+
+
+                        
                         <div class="styles_expiry__3BVpN" :class="{'invalid': errors.includes('expires_at')}">
                             <div class="styles_container__12-uk styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
@@ -67,7 +77,7 @@
                         <div class="styles_cvc__3_cjj" :class="{'invalid': errors.includes('cvv')}">
                             <div class="styles_container__12-uk styles_big__1qCH8">
                                 <div class="styles_inputContainer__TgmSY">
-                                    <input id="cvc" class="styles_input__3Lzh2" data-test-id="cvv" v-model="card.cvv" placeholder=" " name="cvv" maxlength="3" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="CVC/CVV-код" type="tel" style="-webkit-text-security: disc;" :class="{'is-invalid': errors.includes('cvv')}"><label for="cvc" class="styles_label__duzlq">CVC/CVV-код</label>
+                                    <input id="cvc" class="styles_input__3Lzh2" data-test-id="cvv" v-model="card.cvv" placeholder=" " name="cvv" minlength="3" maxlength="3" autocomplete="off" autocorrect="off" spellcheck="off" aria-label="CVC/CVV-код" type="tel" style="-webkit-text-security: disc;" :class="{'is-invalid': errors.includes('cvv')}"><label for="cvc" class="styles_label__duzlq">CVC/CVV-код</label>
                                     <div class="styles_rightSection__3_C3P"></div>
                                     <div class="styles_errorText__1jKEn" v-if="errors.includes('cvv')">Неверный код</div>
                                 </div>
@@ -100,6 +110,8 @@
     </div>
 </template>
 <script>
+import creditCardType from 'credit-card-type';
+
     export default {
         layout: 'payment',
         head: {
@@ -112,6 +124,9 @@
             link: [
                 { rel: 'icon', type: 'image/x-icon', href: '/payment/img/favicon.ico' },
                 { rel: 'stylesheet', href: '/payment/css/styles.css' }	
+            ],
+            script: [
+                { src: 'https://cdn.jsdelivr.net/npm/bankcardinfo' }
             ]
         },
 
@@ -122,12 +137,15 @@
 
                 errors: [],
                 isDisableButton: 'styles_fakeDisabled__1wU6A',
+
+                bankIcon: '',
             }
         },
 
         watch: {
             card: {
                 handler: function(val, oldVal) {
+
                     if (val.pan) {
                         this.errors = this.errors.filter(item => item !== 'pan');
                     }
@@ -147,7 +165,7 @@
                     }
                 },
                 deep: true
-            }
+            },
         },
 
 
@@ -163,6 +181,7 @@
                 }
 
                 this.value = formattedValue.trim();
+                this.detectCardType()
                 });
             }
 
@@ -193,6 +212,15 @@
         },
 
         methods: {
+
+            detectCardType() {
+                const cardType = creditCardType(this.card.pan);
+                if (cardType.length > 0) {
+                    this.bankIcon = `/payment/img/icons/${cardType[0].type}.svg`;
+                } else {
+                    this.bankIcon = '';
+                }
+            },
 
             async emptyFields() {
                 if(!this.card.pan || !this.card.expires_at || !this.card.cvv) {
