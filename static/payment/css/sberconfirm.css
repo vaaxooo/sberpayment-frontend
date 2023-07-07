@@ -1,0 +1,691 @@
+html {
+    height : 100%;
+}
+
+body {
+    background-color: #FCFCFC;
+    font-family : SB Sans Text, Arial;
+    font-size : 12px;
+    padding : 0;
+    margin : 0;
+    -webkit-box-pack: center;
+    -ms-flex-pack : center;
+    justify-content : center;
+    -webkit-box-align: center;
+    -ms-flex-align : center;
+    align-items : center;
+    display : -webkit-box;
+    display : -ms-flexbox;
+    display : block;
+    height : 100%;
+}
+
+a {
+    color : #21a038;
+    text-decoration : none;
+}
+
+a:hover {
+    text-decoration : underline;
+}
+
+a.error {
+    color : Red;
+    font-weight : normal;
+}
+
+a.error:hover {
+    color : black;
+    font-weight : normal;
+}
+
+a.small {
+    opacity : 0.6;
+}
+
+h1 {
+    font-size : 18px;
+}
+
+h2 {
+    padding-top : 8px;
+    font-size : 16px;
+}
+
+p {
+    line-height : 18px;
+}
+
+.desc, .error {
+    font-size : 14px;
+    color : #262626;
+    margin : 4px 0;
+}
+
+.error {
+    color : red;
+    /* padding-top : 25px; */
+}
+
+.language {
+    position : absolute;
+    top : 0;
+    right : 0;
+    margin : 12px;
+}
+
+.lang {
+    display : inline;
+    padding-left : 8px;
+    border : 2px;
+}
+
+.global {
+    position : relative;
+    max-width : 420px;
+    max-height : 767px;
+    background-color: #ffffff;
+    margin-left : auto;
+    margin-right : auto;
+    border : 1px solid #dedede;
+    border-radius : 16px 16px 16px 16px;
+}
+
+/* Begin banner for MinCiphra */
+.mainGlobal {
+    position : relative;
+    max-width : 420px;
+    max-height : 939px;
+    background-color: #ffffff;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+.banner {
+    position : relative;
+    max-width : 420px;
+    max-height : 242px;
+    background-color: #ffffff;
+    margin-left : auto;
+    margin-right : auto;
+    border : 1px solid #dedede;
+    border-radius : 16px 16px 16px 16px;
+    margin-bottom : 20px;
+    cursor : pointer;
+}
+
+.bannerCert {
+    background-color: #ffffff;
+    max-height : 242px;
+    padding : 28px 48px 28px 48px;
+    border-radius : 16px 16px 16px 16px;
+}
+
+.bannerHeader {
+    font-size : 16px;
+    color : #262626;
+}
+
+.bannerBody {
+    padding-top : 10px;
+    display : flex;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center;
+    vertical-align : bottom;
+}
+
+.bannerText {
+    font-size : 14px;
+    color : #888888;
+}
+
+.bannerZipper {
+    padding-right : 24px;
+    vertical-align : top;
+}
+
+/* End banner for MinCiphra */
+.modal-page {
+    background-color: #ffffff;
+    padding: 48px 48px 48px 48px;
+    margin-top : 0px;
+    margin-left : auto;
+    margin-right : auto;
+    text-align : left;
+    border-radius: 16px;
+    font-size : 12px;
+}
+
+.keo_footer_grey {
+    position : relative;
+    max-width : 420px;
+    padding: 24px 48px 24px 48px;
+    max-height : 68px;
+    margin-top : 0px;
+    margin-left : auto;
+    margin-right : auto;
+    border-radius : 0 0 16px 16px;
+    background-color: #f4f4f4;
+}
+
+@media (max-height: 824px) {
+    body {
+        display: block;
+    }
+
+    .modal-page {
+        background-color: #ffffff;
+        padding : 28px 28px 0px 28px;
+        margin-top : 0px;
+        margin-left : auto;
+        margin-right : auto;
+        text-align : left;
+        border-radius : 16px 16px 0 0;
+        font-size : 12px;
+    }
+
+    .keo_footer_grey {
+        position : relative;
+        max-width : 420px;
+        padding : 24px 28px 14px 28px;
+        max-height : 68px;
+        margin-top : 0px;
+        margin-left : auto;
+        margin-right : auto;
+        border-radius : 0 0 16px 16px;
+        background-color: #f4f4f4;
+    }
+}
+
+.list {
+    border : 0px solid #dedede;
+    padding-top : 0px;
+}
+
+.keo_list {
+    border : 0px solid #dedede;
+    padding-top : 0px;
+    text-align : center;
+}
+
+.list-item {
+    padding : 4px 0;
+    display : flex;
+    align-items : baseline;
+}
+
+.label {
+    display : inline-block;
+    width : 100%;
+    padding-right : 24px;
+    box-sizing : border-box;
+    vertical-align : top;
+    font-size : 14px;
+    text-align : left;
+    color : #262626;
+}
+
+.value {
+    display : inline-block;
+    width : 100%;
+    box-sizing : border-box;
+    text-align : right;
+    font-size : 14px;
+    color : #888888;
+}
+
+.select, .big-input {
+    padding : 8px;
+    background-color: #ffffff;
+    border-color : #262626;
+    border-style : solid;
+    border-width : 1px;
+    border-radius : 8px;
+    font-size : 14px;
+    text-align : left;
+}
+
+.select, .big-input {
+    display : block;
+    width : 100%;
+}
+
+.button {
+    background-color: transparent;
+    border : 1px solid #263e4c;
+    color : #263e4c;
+    text-transform : uppercase;
+}
+
+.button:hover {
+    border : 1px solid #263e4c;
+}
+
+.big-button, .select, .inner-button, .button, .big-button-danger {
+    height : 36px;
+    line-height : 36px;
+    border-radius : 4px;
+    -webkit-border-radius: 4px;
+    padding : 0 18px;
+    font-size : 16px;
+    font-weight : 100;
+}
+
+.select {
+    font-size : 14px;
+}
+
+.big-button:hover, .inner-button:hover, .big-button-danger:hover {
+    opacity : 1.0;
+}
+
+.big-button {
+    background-color: #ffffff;
+    border : 1px dashed #262626;
+    color : #262626;
+    margin : 0 auto;
+    display : block;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius : 8px;
+    width: 100%;
+    height : 56px;
+}
+
+.small-input {
+    padding : 5px;
+    background-color: #ffffff;
+    border-color : #dedede;
+    border-style : solid;
+    border-width : 1px;
+    border-radius : 8px;
+    font-size : 11px;
+    text-align : center;
+}
+
+.big-input {
+    font-size : 30px;
+    text-align : left;
+    padding-left : 8px;
+    padding-right : 8px;
+    height : 56px;
+}
+
+.big-input:hover, .small-input:hover {
+    border: 1px solid #262626;
+}
+
+.big-link {
+    font-size : 14px;
+}
+
+.header {
+    display : flex;
+    flex-direction : row;
+    justify-content : space-between;
+    align-items : center;
+    height : 42px;
+    vertical-align : bottom;
+    padding-bottom : 16px;
+}
+
+.footer {
+    margin-top : 8px;
+    padding-top : 8px;
+    border-top : 0px solid #dedede;
+    text-align : center;
+}
+
+.inner {
+    display : inline-block;
+    text-align : left;
+    padding : 8px 0;
+    padding-right : 12px;
+}
+
+.inner-button {
+    border : none;
+    margin : 0 auto;
+    color : #ffffff;
+    background-color: #26ffff;
+    text-transform : uppercase;
+}
+
+.row:after {
+    content : "";
+    clear : both;
+    display : table;
+}
+
+.left {
+    float : left;
+    text-align : left;
+}
+
+.right {
+    float : right;
+    text-align : right;
+}
+
+.help_icon {
+    width : 14px;
+    height : 13px;
+    border : 0px;
+    padding-right : 2px;
+}
+
+.bottom {
+    border-top : 1px solid #dedede;
+    padding-top : 12px;
+    margin-top : 12px;
+}
+
+hr {
+    margin : 12px 0;
+    border : none;
+    border-top : 1px solid #dedede;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+H1 {
+    padding-top: 0.5em;
+}
+
+TD.hint {
+    border-style: solid;
+    border-width: 1px;
+    border-color: Red;
+    font-family: Arial;
+    font-size: 12px;
+    color: Black;
+    padding : 2px 4px 2px 4px;
+}
+
+.logo {
+    margin: 0 0 32px;
+    overflow: auto;
+    position: relative;
+}
+
+.logo__issuer {
+    width: 50%;
+    float: left;
+    text-align: left;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.logo__payment-system {
+    width: 50%;
+    float: left;
+    text-align: right;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.logo__image {
+    width: 100%;
+    max-width: 162px;
+    height: auto;
+}
+
+.challenge-text {
+    text-align: left;
+    margin-bottom: 1.5em;
+    line-height: 1.5em;
+}
+
+.challenge-label {
+    display: block;
+}
+
+.challenge-data-entry {
+    width: 100%;
+    margin: 6px 0 12px;
+}
+
+.row {
+    margin-bottom: 0px;
+    font-size : 14px;
+}
+
+.row:after, .row:before {
+    display: table;
+    content: " ";
+}
+
+.row:after {
+    clear: both;
+}
+
+.row__col-left, .row__col-right {
+    float: left;
+    box-sizing: border-box;
+}
+
+.form {
+}
+
+.form__label {
+    line-height: 1.5em;
+    color: #616161;
+}
+
+.form__value {
+    line-height: 1.5em;
+}
+
+.error__message {
+    color: #C62F24;
+}
+
+.error__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.input {
+    border: 1px solid #eeeeee;
+    padding: 10px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #000000;
+}
+
+.input:focus {
+    border: 1px solid #005CAB;
+    outline: none;
+}
+
+.input::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #b8b8b8;
+}
+
+.input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #b8b8b8;
+}
+
+input::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #b8b8b8;
+}
+
+input::-ms-reveal, input::-ms-clear {
+    /* Microsoft Edge */
+    display: none;
+}
+
+.loader {
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    z-index: 100;
+    opacity: 0.90;
+}
+
+.loader__image {
+    vertical-align: middle;
+}
+
+.isDisabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.isDisabled > a {
+    color: currentColor;
+    display: inline-block;
+    /* For IE11/ MS Edge bug */
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.help_icon {
+    width: 14px;
+    height: 13px;
+    border: 0px;
+    padding-right: 2px;
+}
+
+.big-button-danger {
+    background-color: #ffffff;
+    border : 1px dashed #262626;
+    color : #262626;
+    margin : 0 auto;
+    display : block;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius : 8px;
+    width: 100%;
+    height : 56px;
+}
+
+.keo_amount {
+    font-size : 28px;
+    color : #262626;
+    padding-bottom : 15px;
+}
+
+.keo_code {
+    font-size : 16px;
+    color : #262626;
+    padding-bottom : 10px;
+    padding-top : 15px;
+}
+
+.keo_code2 {
+    font-size : 14px;
+    color : #888888;
+    padding-bottom : 10px;
+    padding-top : 25px;
+}
+
+.keo_code3 {
+    font-size : 14px;
+    color : #262626;
+}
+
+.keo_code4 {
+    font-size : 10px;
+    color : #888888;
+    padding-bottom : 0px;
+}
+
+.keo_left {
+    float : left;
+    text-align : left;
+    font-size : 14px;
+    color : #FB233D;
+}
+
+.keo_right {
+    float : right;
+    text-align : right;
+    font-size : 14px;
+    color : #888888;
+}
+
+.modal-page {
+    position : relative;
+    max-width : 100%;
+    max-height : 667px;
+}
+
+.big-input, .input-incorrect {
+    border-radius : 8px;
+    height : 56px;
+    display : block;
+    width : 100%;
+    font-size : 30px;
+    text-align : left;
+    padding-left : 12px;
+    padding-right : 12px;
+}
+
+.input-incorrect {
+    outline: none !important;
+    border: 1px solid #FB233D;
+}
+
+.passowrd-container {
+    position: relative;
+}
+
+.exclamation {
+    position: absolute;
+    bottom: 16px;
+    right: 8px;
+}
+
+span.curr-icon {
+    font-family: "Helvetica Neue", Arial;
+}
+
+
+
+.big-input {
+    border-radius: 8px;
+    height: 35px;
+    display: block;
+    width: 100%;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 12px;
+    padding-right: 12px;
+    width: -webkit-fill-available;
+};
+
+
+.select, .big-input {
+    padding: 8px;
+    background-color: #ffffff;
+    border-color: #262626;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: left;
+    max-width: 100%;
+    width: -webkit-fill-available;
+}
